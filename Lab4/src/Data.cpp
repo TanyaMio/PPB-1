@@ -3,27 +3,28 @@
  * --------------------------------------------------------*/
 
 #include <iostream>
+#include "Data.h"
 
 int n;
 
-void Data(int n_to_set) {
+Data::Data(int n_to_set) {
     n = n_to_set;
 }
 
-int getN() {
+int Data::getN() {
     return n;
 }
 
 
 /** Filling Vector with Number **/
-void Vector_Fill(int* A, int a) {
+void Data::Vector_Fill(int* A, int a) {
     for (int i = 0; i < n; i++) {
         A[i] = a;
     }
 }
 
 /** Filling Vector with Number **/
-void Matrix_Fill(int** MA, int a) {
+void Data::Matrix_Fill(int** MA, int a) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             MA[i][j] = a;
@@ -32,17 +33,17 @@ void Matrix_Fill(int** MA, int a) {
 }
 
 /** Setting Vector Element **/
-void Vector_Set_Element(int* A, int i, int a) {
+void Data::Vector_Set_Element(int* A, int i, int a) {
     A[i] = a;
 }
 
 /** Setting Matrix Element **/
- void Matrix_Set_Element(int** MA, int i, int j, int a) {
+void Data::Matrix_Set_Element(int** MA, int i, int j, int a) {
     MA[i][j] = a;
- }
+}
 
 /** Multiplying Scalar and Vector **/
-int* Mul_Vector_Scalar(int* A, int a) {
+int* Data::Mul_Vector_Scalar(int* A, int a) {
     int* R = new int[n];
     for (int i = 0; i < n; i++) {
         R[i] = A[i] * a;
@@ -51,7 +52,7 @@ int* Mul_Vector_Scalar(int* A, int a) {
 }
 
 /** Multiplying Vector and Matrix **/
-int* Mul_Vector_Matrix(int* A, int** MA) {
+int* Data::Mul_Vector_Matrix(int* A, int** MA) {
     int* R = new int[n];
     int s;
     for (int i = 0; i < n; i++) {
@@ -65,7 +66,7 @@ int* Mul_Vector_Matrix(int* A, int** MA) {
 }
 
 /** Multiplying Matrix and Matrix **/
-int** Mul_Matrix_Matrix(int** MA, int** MB) {
+int** Data::Mul_Matrix_Matrix(int** MA, int** MB) {
     int** MR = new int*[n];
     int s;
     for (int i = 0; i < n; i++) {
@@ -81,7 +82,7 @@ int** Mul_Matrix_Matrix(int** MA, int** MB) {
 }
 
 /** Adding Two Vectors **/
-int* Add_Vectors(int* A, int* B) {
+int* Data::Add_Vectors(int* A, int* B) {
     int* R = new int[n];
     for (int i = 0; i < n; i++) {
         R[i] = A[i] + B[i];
@@ -90,7 +91,7 @@ int* Add_Vectors(int* A, int* B) {
 }
 
 /** Transposing Matrix **/
-void Transpose_Matrix(int** MA) {
+void Data::Transpose_Matrix(int** MA) {
     int t;
     for (int i = 0; i < n; i++) {
         for (int j = i; j < n; j++) {
@@ -102,7 +103,7 @@ void Transpose_Matrix(int** MA) {
 }
 
  /** Sorting Vector **/
-void Sort_Vector(int* A) {
+void Data::Sort_Vector(int* A) {
     int t;
     for (int i = 0; i < n; i++) {
         for (int j = i; j < n; j++) {
@@ -116,7 +117,7 @@ void Sort_Vector(int* A) {
 }
 
 /** Sorting Matrix **/
-void Sort_Matrix(int** MA) {
+void Data::Sort_Matrix(int** MA) {
     int t;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -132,7 +133,7 @@ void Sort_Matrix(int** MA) {
 }
 
 /** Finding MAX in Vector **/
-int Vector_Max(int* A) {
+int Data::Vector_Max(int* A) {
     int r = A[0];
     for (int i = 1; i < n; i++) {
         if (r < A[i]) {
@@ -143,7 +144,7 @@ int Vector_Max(int* A) {
 }
 
 /** Printing Vector on Screen **/
-void Vector_Print(int* A) {
+void Data::Vector_Print(int* A) {
     for (int i = 0; i < n; i++) {
         std::cout << A[i] << " ";
     }
@@ -151,7 +152,7 @@ void Vector_Print(int* A) {
 }
 
 /** Printing Matrix on Screen **/
-void Matrix_Print(int** MA) {
+void Data::Matrix_Print(int** MA) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             std::cout << MA[i][j] << " ";
@@ -162,7 +163,7 @@ void Matrix_Print(int** MA) {
 }
 
 /** Calculating F1: E = MAX(A)*(X+B*(MA*MD)+C) **/
-int* Func1(int* A, int* B, int* C, int* X, int** MA, int** MD) {
+int* Data::Func1(int* A, int* B, int* C, int* X, int** MA, int** MD) {
     int** MR = Mul_Matrix_Matrix(MA, MD);
     int* D = Mul_Vector_Matrix(B, MR);
     int* E = Add_Vectors(X, D);
@@ -175,7 +176,7 @@ int* Func1(int* A, int* B, int* C, int* X, int** MA, int** MD) {
 }
 
 /** Calculating F2: ML = SORT(TRANS(MF)*MK) **/
-int** Func2(int** MF, int** MK) {
+int** Data::Func2(int** MF, int** MK) {
     Transpose_Matrix(MF);
     int** ML = Mul_Matrix_Matrix(MF, MK);
     Sort_Matrix(ML);
@@ -183,7 +184,7 @@ int** Func2(int** MF, int** MK) {
 }
 
 /** Calculating F3: S = SORT(O*MO)*(MS*MT) **/
-int* Func3(int* O, int** MO, int** MS, int** MT) {
+int* Data::Func3(int* O, int** MO, int** MS, int** MT) {
     int* R = Mul_Vector_Matrix(O, MO);
     int** MR = Mul_Matrix_Matrix(MS, MT);
     Sort_Vector(R);
