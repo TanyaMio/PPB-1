@@ -68,6 +68,9 @@ int* Data::Mul_Vector_Matrix(int* A, int** MA) {
 /** Multiplying Matrix and Matrix **/
 int** Data::Mul_Matrix_Matrix(int** MA, int** MB) {
     int** MR = new int*[n];
+    for (int i = 0; i < n; i++) {
+        MR[i] = new int[n];
+    }
     int s;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -170,8 +173,11 @@ int* Data::Func1(int* A, int* B, int* C, int* X, int** MA, int** MD) {
     D = Add_Vectors(E, C);
     int m = Vector_Max(A);
     E = Mul_Vector_Scalar(D, m);
-    delete D;
-    delete MR;
+    delete[] D;
+    for (int i = 0; i < n; i++) {
+        delete[] MR[i];
+    }
+    delete[] MR;
     return E;
 }
 
@@ -189,5 +195,10 @@ int* Data::Func3(int* O, int** MO, int** MS, int** MT) {
     int** MR = Mul_Matrix_Matrix(MS, MT);
     Sort_Vector(R);
     int* S = Mul_Vector_Matrix(R, MR);
+    delete[] R; 
+    for (int i = 0; i < n; i++) {
+        delete[] MR[i];
+    }
+    delete[] MR;
     return S;
 }
