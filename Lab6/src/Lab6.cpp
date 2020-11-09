@@ -24,31 +24,39 @@ Data data = Data(1000);
 
 int main(int argc, char** argv)
 {
-    std::cout << "-- Lab5 has started.\n";
+
+    int rank;
+    int size;
     
     MPI_Init(&argc, &argv);
 
-    int rank;
 
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     switch (rank) {
     case 0:
-        T1();
+        std::cout << "-- Lab5 has started.\n";
         break;
     case 1:
-        T2();
+        T1();
         break;
     case 2:
+        T2();
+        break;
+    case 3:
         T3();
         break;
     default:
         break;
     }
+    MPI_Barrier(MPI_COMM_WORLD);
+    if (rank == 0) {
+        std::cout << "-- Lab5 has finished.\n";
+    }
 
     MPI_Finalize();
 
-    std::cout << "-- Lab5 has finished.\n";
     return 0;
 }
 
